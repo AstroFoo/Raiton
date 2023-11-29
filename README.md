@@ -11,10 +11,10 @@ The code for this repo has adopted code and assets from the following sources, l
   - In order to figure out how to remove elements safely from vectors, needed to do a bit of research into the erase-remove idiom described in these pages:
     - https://en.cppreference.com/w/cpp/algorithm/remove
     - https://en.wikipedia.org/wiki/Erase%E2%80%93remove_idiom
-    
+
 ## Features
 
-* This is Raiton! A shooting game where the player is a blue space-ship and you shoot the other space-ships.  They are definitely evil, so no need to feel bad.  Have fun! Be sure to dodge the bullets because there is a lot of them!  You probably shouldn't collide with the enemy ships either because that will end you.
+* This is Raiton! A shooting game where the player is a blue space-ship and you shoot the other space-ships.  Have fun!  Be sure to dodge the bullets because there is a lot of them!  You probably shouldn't collide with the enemy ships either because that will end you.
 * There are two different enemy types and a boss!  The enemies have different shooting patterns.
 * Controls:
     * arrow keys to move around; 8-way movement.
