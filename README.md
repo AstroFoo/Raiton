@@ -14,9 +14,9 @@ The code for this repo has adopted code and assets from the following sources, l
 * This is Raiton! A shooting game where the player is a blue space-ship and you shoot the other space-ships.  They are definitely evil, so no need to feel bad.  Have fun! Be sure to dodge the bullets because there is a lot of them!  You probably shouldn't collide with the enemy ships either because that will end you.
 * There are two different enemy types and a boss!  The enemies have different shooting patterns.
 * Controls:
-** arrow keys to move around; 8-way movement.
-** 'z' key to fire.  Just hold it down and the ship will keep firing.
-** 'Esc' to immediately quit out.  The game will also quit out after a few seconds if you die or if you kill the boss.
+    * arrow keys to move around; 8-way movement.
+    * 'z' key to fire.  Just hold it down and the ship will keep firing.
+    * 'Esc' to immediately quit out.  The game will also quit out after a few seconds if you die or if you kill the boss.
 * Please don't try to resize or maximise the window.  Thank you!
 
 ## Notes regarding code:
