@@ -8,7 +8,10 @@ The code for this repo has adopted code and assets from the following sources, l
   - "Creating a 2D shoot 'em up" tutorial located here: https://www.parallelrealities.co.uk/tutorials/#bad.  This has been a geat resource for learning about how to code a shooting game.  If anyone asks, Udacity recommends this resource [here](https://learn.udacity.com/nanodegrees/nd213/parts/a0c73361-219d-4ff6-984c-e37478ad300c/lessons/b4a166f9-ae01-4afc-95ed-93a367b8e4e0/concepts/4b55f1cb-507e-4bd5-8147-ca036c03355f).
   - some images have been taken from https://opengameart.org/.  Credits to the original creators are further down in the readme.  To my understanding, this art is free, even for commercial use, as long as the original authors are credited.  Credits are below in this readme.
   - The Udacity starter repo for "SnakeGame" was used as a fundamental template to start with, but it has since been gutted beyond recognition and Raiton's code bears very little resemblance to it.  It seems only fair to credit it anyway [it's here](https://github.com/udacity/CppND-Capstone-Snake-Game)
-
+  - In order to figure out how to remove elements safely from vectors, needed to do a bit of research into the erase-remove idiom described in these pages:
+    - https://en.cppreference.com/w/cpp/algorithm/remove
+    - https://en.wikipedia.org/wiki/Erase%E2%80%93remove_idiom
+    
 ## Features
 
 * This is Raiton! A shooting game where the player is a blue space-ship and you shoot the other space-ships.  They are definitely evil, so no need to feel bad.  Have fun! Be sure to dodge the bullets because there is a lot of them!  You probably shouldn't collide with the enemy ships either because that will end you.
