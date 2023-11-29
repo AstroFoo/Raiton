@@ -1,0 +1,17 @@
+4.0 0.5 enemy1
+5.0 0.2 enemy1
+5.0 0.8 enemy1
+6.0 0.4 enemy1
+6.5 0.5 enemy1
+7.0 0.6 enemy1
+15.0 0.1 enemy2
+15.0 0.3 enemy2
+15.0 0.5 enemy2
+15.0 0.7 enemy2
+15.0 0.9 enemy2
+25.0 0.3 enemy3
+25.0 0.5 enemy3
+25.0 0.7 enemy3
+32.0 0.35 enemy4
+32.0 0.65 enemy4
+40.0 0.5 boss1
