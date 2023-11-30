@@ -21,7 +21,7 @@ class Renderer
         SDL_Texture *GetTexture(std::string string);
         void Blit(const Entity &entity);
         void Blit(int x, int y, SDL_Texture *texture);
-        void Render(const Player &player, const Stage &stage);
+        void Render(const Player &player, Stage &stage);
         void UpdateWindowTitle(int score, int fps);
 
     private:

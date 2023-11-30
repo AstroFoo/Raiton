@@ -86,7 +86,7 @@ SDL_Texture *Renderer::LoadTexture(std::string filename)
     char filename_c[filename.length() + 1];
     strcpy(filename_c, filename.c_str());
     
-	SDL_Texture *texture;
+	SDL_Texture *texture = nullptr;
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename_c);
 	texture = IMG_LoadTexture(sdl_renderer, filename_c);
 	return texture;
@@ -111,12 +111,14 @@ void Renderer::Blit(const Entity &entity)
     Blit(entity.x, entity.y, entity.texture);
 }
 
-void Renderer::Render(const Player &player, const Stage &stage)
+void Renderer::Render(const Player &player, Stage &stage)
 {
     // --- Clear screen
     //
     SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
     SDL_RenderClear(sdl_renderer);
+
+    stage.mutex.lock();
 
     const auto &enemies = stage.GetEnemies();
     const auto &enemy_bullets = stage.GetEnemyBullets();
@@ -134,6 +136,8 @@ void Renderer::Render(const Player &player, const Stage &stage)
         Blit(*enemy.get());
     for (auto &enemy_bullet : enemy_bullets)
         Blit(*enemy_bullet.get());
+
+    stage.mutex.unlock();
 
     // --- Update Screen
     //

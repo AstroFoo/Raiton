@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_definitions(-std=c++17)
 
-set(CXX_FLAGS "-Wall -pThread")
+set(CXX_FLAGS "-Wall -g -pThread")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
 project(Raiton)

@@ -42,6 +42,8 @@ class Stage
               std::map<std::string, SDL_Texture*> &textures,
               std::deque<Spawn> spawns);
 
+        std::mutex mutex;
+
         const std::vector<std::shared_ptr<Enemy>> &GetEnemies() const;
         const std::vector<std::shared_ptr<EnemyBullet>> &GetEnemyBullets() const;
         const std::vector<std::shared_ptr<PlayerBullet>> &GetPlayerBullets() const;
@@ -91,7 +93,6 @@ class Stage
         
         std::vector<std::thread> _threads;
         MessageQueue<bool> _entity_monitor;
-        std::mutex _mutex;
 };
 
 #endif

@@ -12,7 +12,7 @@ class Entity
         float y;
         float width;
         float height;
-        SDL_Texture *texture;
+        SDL_Texture *texture = nullptr;
 
         bool alive{true}; // Used to tag entities for removal from containers
 
