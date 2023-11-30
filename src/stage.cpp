@@ -110,6 +110,8 @@ StageState Stage::Update(Uint32 time_since_last_update)
     }
     _current_time += time_since_last_update;
     
+    std::unique_lock<std::mutex> lck(mutex);
+
     if ((!_player.alive) || (_spawns.size() == 0 && _enemies.size() == 0))
         _player_transition_time += time_since_last_update;
     
@@ -238,7 +240,6 @@ void ReduceDestroyed(std::vector<T> &vec)
 
 void Stage::RemoveOldEntities()
 {
-    std::unique_lock<std::mutex> lck(mutex);
     ReduceDestroyed<std::shared_ptr<PlayerBullet>>(_player_bullets);
     ReduceDestroyed<std::shared_ptr<Enemy>>(_enemies);
     ReduceDestroyed<std::shared_ptr<EnemyBullet>>(_enemy_bullets);
@@ -286,6 +287,7 @@ void Stage::SimulateOOBChecker()
 
 void Stage::CheckForOOBEntities()
 {
+    std::unique_lock<std::mutex> lck(mutex);
     for (auto entity : GetEntities())
     {
         if (entity->IsOutOfBounds())
@@ -308,6 +310,7 @@ void Stage::SimulateOOBRemover()
 
 void Stage::RemoveOOBEntities()
 {
+    std::unique_lock<std::mutex> lck(mutex);
     ReduceOutOfBounds<std::shared_ptr<Enemy>>(_enemies);
     ReduceOutOfBounds<std::shared_ptr<EnemyBullet>>(_enemy_bullets);
     ReduceOutOfBounds<std::shared_ptr<PlayerBullet>>(_player_bullets);
