@@ -22,6 +22,10 @@ class Entity
         virtual Hitbox GetHitbox() = 0;
         virtual bool IsOutOfBounds() = 0;
         virtual void Update(Uint32 time_elapsed) = 0;
+
+    protected:
+        Entity();
+        Entity(float x, float y, float width, float height, SDL_Texture *texture);
 };
 
 #endif

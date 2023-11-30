@@ -9,16 +9,14 @@
 #include "hitbox.h"
 #include "shotPattern.h"
 
-Enemy::Enemy(){}
+Enemy::Enemy() : Entity(),
+                 _screen_width{0}, _screen_height{0}, _health{0}, _shot_speed{0}, _shot_pattern{ShotPattern::none} {}
 
 // Constructor for prefabs
 Enemy::Enemy(SDL_Texture &texture_, std::size_t screen_width, std::size_t screen_height, int health, float shot_speed, ShotPattern shot_pattern) :
-             _screen_width{screen_width}, _screen_height{screen_height}, _health{health}, _shot_speed{shot_speed}, _shot_pattern{shot_pattern}
+             Entity(0, 0, 0, 0, &texture_),
+              _screen_width{screen_width}, _screen_height{screen_height}, _health{health}, _shot_speed{shot_speed}, _shot_pattern{shot_pattern}
 {
-    x = 0;
-    y = 0;
-    texture = &texture_;
-
     // Derived parameters
     int width_, height_;
     SDL_QueryTexture(&texture_, NULL, NULL, &width_, &height_);
@@ -27,7 +25,8 @@ Enemy::Enemy(SDL_Texture &texture_, std::size_t screen_width, std::size_t screen
 } 
 
 // Constructor to create enemies from a prefab
-Enemy::Enemy(float x_, float y_, const Enemy &prefab, bool adjust_position) : Enemy(prefab)
+Enemy::Enemy(float x_, float y_, const Enemy &prefab, bool adjust_position) :
+             Enemy(prefab)
 {
     x = x_;
     y = y_;
@@ -41,19 +40,9 @@ Enemy::Enemy(float x_, float y_, const Enemy &prefab, bool adjust_position) : En
 
 Enemy::~Enemy(){}
 
-Enemy::Enemy(const Enemy &source)
-{
-    x = source.x;
-    y = source.y;
-    width = source.width;
-    height = source.height;
-    texture = source.texture;
-    _screen_width = source._screen_width;
-    _screen_height = source._screen_height;
-    _health = source._health;
-    _shot_speed = source._shot_speed;
-    _shot_pattern = source._shot_pattern;
-}
+Enemy::Enemy(const Enemy &source) :
+             Entity(source.x, source.y, source.width, source.height, source.texture),
+             _screen_width(source._screen_width), _screen_height(source._screen_height), _health(source._health), _shot_speed(source._shot_speed), _shot_pattern(source._shot_pattern) {}
 
 Enemy &Enemy::operator=(const Enemy &source)
 {
@@ -74,21 +63,11 @@ Enemy &Enemy::operator=(const Enemy &source)
     return *this;
 }
 
-Enemy::Enemy(Enemy &&source)
+Enemy::Enemy(Enemy &&source) :
+             Entity(source.x, source.y, source.width, source.height, source.texture),
+             _screen_width(source._screen_width), _screen_height(source._screen_height), _health(source._health), _shot_speed(source._shot_speed), _shot_pattern(source._shot_pattern)
 {
-    x = source.x;
-    y = source.y;
-    width = source.width;
-    height = source.height;
-    texture = source.texture;
-    _screen_width = source._screen_width;
-    _screen_height = source._screen_height;
-    _health = source._health;
-    _shot_speed = source._shot_speed;
-    _shot_pattern = source._shot_pattern;
-
     source.texture = nullptr;
-
 }
 
 Enemy &Enemy::operator=(Enemy &&source)

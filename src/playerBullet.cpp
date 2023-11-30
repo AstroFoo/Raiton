@@ -4,14 +4,14 @@
 #include <memory>
 #include "SDL.h"
 
-PlayerBullet::PlayerBullet(){}
+// Default constructor with default member values
+// Note, x, y, width, height and texture belong to the base class "Entity" so they cannot just go into the initializer list.
+// Instead, call an Entity constructor for these
+PlayerBullet::PlayerBullet() : Entity() {}
 
-PlayerBullet::PlayerBullet(SDL_Texture &texture_)
+PlayerBullet::PlayerBullet(SDL_Texture &texture_) :
+                           Entity(0, 0, 0, 0, &texture_)
 {
-    x = 0;
-    y = 0;
-    texture = &texture_;
-
     // Derived parameters
     int width_, height_;
     SDL_QueryTexture(&texture_, NULL, NULL, &width_, &height_);
@@ -19,22 +19,16 @@ PlayerBullet::PlayerBullet(SDL_Texture &texture_)
     height = height_;
 }
 
-PlayerBullet::PlayerBullet(float x_, float y_, const PlayerBullet &prefab) : PlayerBullet(prefab)
+PlayerBullet::PlayerBullet(float x_, float y_, const PlayerBullet &prefab) :
+                           Entity(x_, y_, prefab.width, prefab.height, prefab.texture) {}
+
+PlayerBullet::~PlayerBullet()
 {
-    x = x_;
-    y = y_;
+    texture = nullptr;
 }
 
-PlayerBullet::~PlayerBullet(){}
-
-PlayerBullet::PlayerBullet(const PlayerBullet &source)
-{
-    x = source.x;
-    y = source.y;
-    texture = source.texture;
-    width = source.width;
-    height = source.height;
-}
+PlayerBullet::PlayerBullet(const PlayerBullet &source) :
+                           Entity(source.x, source.y, source.width, source.height, source.texture) {}
 
 PlayerBullet &PlayerBullet::operator=(const PlayerBullet &source)
 {
@@ -50,14 +44,9 @@ PlayerBullet &PlayerBullet::operator=(const PlayerBullet &source)
     return *this;
 }
 
-PlayerBullet::PlayerBullet(PlayerBullet &&source)
+PlayerBullet::PlayerBullet(PlayerBullet &&source) :
+                           Entity(source.x, source.y, source.width, source.height, source.texture)
 {
-    x = source.x;
-    y = source.y;
-    texture = source.texture;
-    width = source.width;
-    height = source.height;
-
     source.texture = nullptr;
 }
 

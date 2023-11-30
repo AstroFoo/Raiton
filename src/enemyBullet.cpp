@@ -4,16 +4,19 @@
 #include <memory>
 #include "SDL.h"
 
-EnemyBullet::EnemyBullet(){}
+// Default constructor with default member values
+// Note, x, y, width, height and texture belong to the base class "Entity" so they cannot just go into the initializer list.
+// Instead, call an Entity constructor for these
+EnemyBullet::EnemyBullet() : Entity(), _screen_width(0), _screen_height(0), _angle(0), _speed(0) {}
 
 // Constructor used for generating prefabs
+// Note, x, y, width, height and texture belong to the base class "Entity" so they cannot just go into the initializer list.
+// Instead, call an Entity constructor for these.
+// Width and height are set based on the supplied texture
 EnemyBullet::EnemyBullet(SDL_Texture &texture_, std::size_t screen_width, std::size_t screen_height) :
-                         _screen_width(screen_width), _screen_height(screen_height)
+                         Entity(0, 0, 0, 0, &texture_),
+                         _screen_width(screen_width), _screen_height(screen_height), _angle(0), _speed(0)
 {
-    x = 0;
-    y = 0;
-    texture = &texture_;
-
     // Derived parameters
     int width_, height_;
     SDL_QueryTexture(&texture_, NULL, NULL, &width_, &height_);
@@ -21,29 +24,20 @@ EnemyBullet::EnemyBullet(SDL_Texture &texture_, std::size_t screen_width, std::s
     height = height_;
 }
 
-// Constructor for generating new entities from a prefab
-EnemyBullet::EnemyBullet(float x_, float y_, const EnemyBullet &prefab, float angle, float speed) : EnemyBullet(prefab)
+// Constructor for generating new entities from a prefab.  It copies data from the prefab ecept for
+// x, y, angle and speed, which are set to the provided values
+EnemyBullet::EnemyBullet(float x_, float y_, const EnemyBullet &prefab, float angle, float speed) :
+                         Entity(x_, y_, prefab.width, prefab.height, prefab.texture),
+                         _screen_width(prefab._screen_width), _screen_height(prefab._screen_height), _angle(angle), _speed(speed) {}
+
+EnemyBullet::~EnemyBullet()
 {
-    x = x_;
-    y = y_;
-    _angle = angle;
-    _speed = speed;
+    texture = nullptr;
 }
 
-EnemyBullet::~EnemyBullet(){}
-
-EnemyBullet::EnemyBullet(const EnemyBullet &source)
-{
-    x = source.x;
-    y = source.y;
-    width = source.width;
-    height = source.height;
-    texture = source.texture;
-
-    _screen_width = source._screen_width;
-    _screen_height = source._screen_height;
-    _angle = source._angle;
-}
+EnemyBullet::EnemyBullet(const EnemyBullet &source) : 
+                         Entity(source.x, source.y, source.width, source.height, source.texture),
+                         _screen_width(source._screen_width), _screen_height(source._screen_height), _angle(source._angle), _speed(source._speed) {}
 
 EnemyBullet &EnemyBullet::operator=(const EnemyBullet &source)
 {
@@ -62,17 +56,10 @@ EnemyBullet &EnemyBullet::operator=(const EnemyBullet &source)
     return *this;
 }
 
-EnemyBullet::EnemyBullet(EnemyBullet &&source)
+EnemyBullet::EnemyBullet(EnemyBullet &&source) :
+                         Entity(source.x, source.y, source.width, source.height, source.texture),
+                         _screen_width(source._screen_width), _screen_height(source._screen_height), _angle(source._angle), _speed(source._speed)
 {
-    x = source.x;
-    y = source.y;
-    width = source.width;
-    height = source.height;
-    texture = source.texture;
-    _screen_width = source._screen_width;
-    _screen_height = source._screen_height;
-    _angle = source._angle;
-
     source.texture = nullptr;
 }
 

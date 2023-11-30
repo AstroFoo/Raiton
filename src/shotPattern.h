@@ -3,6 +3,7 @@
 
 enum class ShotPattern
 {
+    none,
     straight_1,
     straight_3,
     aimed_1,
